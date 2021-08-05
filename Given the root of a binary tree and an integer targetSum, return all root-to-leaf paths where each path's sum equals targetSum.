@@ -1,0 +1,33 @@
+class Solution {
+    public:
+    vector<int>v;
+    vector<vector<int>>vv;
+    int sum=0;    
+    void recSum(TreeNode * root, int tar) {       
+        v.push_back(root->val);
+        sum+=root->val;    
+        if(root->left==NULL && root->right==NULL) {
+            if(sum == tar) {
+                vv.push_back(v);
+            }       
+         }       
+        if(root->left !=NULL) {                          
+            recSum(root->left, tar); 
+             sum-=root->left->val;
+             v.pop_back();
+        }
+        if(root->right !=NULL) {
+            recSum(root->right, tar);  
+            sum-=root->right->val;
+             v.pop_back();
+        }                
+    }   
+    
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+        if(root==NULL)
+            return vv;
+        recSum(root, targetSum);
+        return vv;
+        
+    }
+};
